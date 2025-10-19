@@ -1099,20 +1099,38 @@ CODE IMPLEMENTATIONS:
             frontend_package = generated_code['frontend/package.json']
             response += json.dumps(frontend_package, indent=2) + "\n"
         
+        # Add all other code files
+        for file_path, file_content in generated_code.items():
+            if file_path not in ['backend/server.js', 'frontend/src/App.js', 'backend/package.json', 'frontend/package.json']:
+                response += f"""
+=== {file_path.upper()} ===
+"""
+                if isinstance(file_content, dict):
+                    response += json.dumps(file_content, indent=2) + "\n"
+                else:
+                    response += str(file_content) + "\n"
+        
         response += f"""
 
 DOWNLOAD INFORMATION:
-- ZIP File: {zip_path}
+- ZIP File Path: {zip_path}
+- Local Directory: {os.path.dirname(zip_path)}
+- File Name: {os.path.basename(zip_path)}
 - File Size: {os.path.getsize(zip_path)} bytes
 - Programming Language: {language}
 
+DIRECT DOWNLOAD:
+You can find your complete MERN stack project at:
+{zip_path}
+
 NEXT STEPS:
-1. Extract the ZIP file from: {zip_path}
-2. Install dependencies: npm install (in both backend and frontend folders)
-3. Set up MongoDB database
-4. Update .env file with your configuration
-5. Start backend: npm run dev (in backend folder)
-6. Start frontend: npm start (in frontend folder)
+1. Navigate to: {os.path.dirname(zip_path)}
+2. Extract the ZIP file: {os.path.basename(zip_path)}
+3. Install dependencies: npm install (in both backend and frontend folders)
+4. Set up MongoDB database
+5. Update .env file with your configuration
+6. Start backend: npm run dev (in backend folder)
+7. Start frontend: npm start (in frontend folder)
 
 Your complete MERN stack application is ready to use!
 """
