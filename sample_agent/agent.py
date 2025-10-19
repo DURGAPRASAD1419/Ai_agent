@@ -1031,12 +1031,12 @@ def process_pdf_with_language(pdf_path, language):
         project_name = "research-app"
         generated_code = research_agent.generate_mern_code(concepts, project_name)
         
-        # Step 4: Create ZIP file in agent's zip_files folder
-        agent_dir = os.path.dirname(os.path.abspath(__file__))
-        zip_files_folder = os.path.join(agent_dir, "zip_files")
-        os.makedirs(zip_files_folder, exist_ok=True)
+        # Step 4: Create ZIP file in project's downloads folder
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        downloads_folder = os.path.join(project_root, "downloads")
+        os.makedirs(downloads_folder, exist_ok=True)
         
-        zip_path = research_agent.create_zip_file(project_name, zip_files_folder)
+        zip_path = research_agent.create_zip_file(project_name, downloads_folder)
         
         if zip_path.startswith("Error"):
             return f"Error creating ZIP file: {zip_path}"
@@ -1118,18 +1118,18 @@ DOWNLOAD INFORMATION:
 - File Name: {os.path.basename(zip_path)}
 - File Size: {os.path.getsize(zip_path)} bytes
 - Programming Language: {language}
-- Download Location: Agent's zip_files folder
+- Download Location: Your project folder
 
 DIRECT DOWNLOAD LINK:
 file://{zip_path.replace(os.sep, '/')}
 
 CLICK TO DOWNLOAD:
-The ZIP file has been automatically saved to the agent's zip_files folder.
+The ZIP file has been automatically saved to your project folder.
 You can access it at: {zip_path}
 
 NEXT STEPS:
-1. Navigate to the agent folder: {agent_dir}
-2. Open the zip_files folder
+1. Navigate to your project folder: {project_root}
+2. Open the downloads folder
 3. Find the file: {os.path.basename(zip_path)}
 4. Extract the ZIP file
 5. Install dependencies: npm install (in both backend and frontend folders)
