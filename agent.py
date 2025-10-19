@@ -995,15 +995,132 @@ def process_user_query(user_input, pdf_file_path=None):
     Process user queries and handle PDF uploads for research paper analysis
     """
     try:
-        # If PDF file is provided, process it immediately
-        if pdf_file_path and os.path.exists(pdf_file_path):
-            return process_pdf_file(pdf_file_path)
+        # Check if user is greeting
+        if any(keyword in user_input.lower() for keyword in ['hi', 'hello', 'hey', 'greetings']):
+            return "Please upload your research paper in the form of PDF."
         
-        # For any other input, return empty - no questions, no responses
-        return ""
+        # If PDF file is provided, ask for programming language
+        if pdf_file_path and os.path.exists(pdf_file_path):
+            return "Please specify the programming language you want to use for the MERN stack implementation."
+        
+        # Check if user is specifying programming language
+        if any(keyword in user_input.lower() for keyword in ['javascript', 'typescript', 'python', 'java', 'c#', 'php', 'go', 'rust', 'node', 'react', 'angular', 'vue']):
+            return process_pdf_with_language(pdf_file_path, user_input)
+        
+        # For any other input, ask for PDF upload
+        return "Please upload your research paper in the form of PDF."
     
     except Exception as e:
-        return ""
+        return "Please upload your research paper in the form of PDF."
+
+def process_pdf_with_language(pdf_path, language):
+    """
+    Process a PDF file with specified programming language and generate MERN stack application
+    """
+    try:
+        # Step 1: Extract content from PDF
+        content = research_agent.extract_pdf_content(pdf_path)
+        
+        if content.startswith("Error"):
+            return f"Error extracting PDF: {content}"
+        
+        # Step 2: Analyze content and generate structure
+        project_structure, concepts = research_agent.analyze_content_and_generate_structure(content)
+        
+        # Step 3: Generate MERN stack code with specified language
+        project_name = "research-app"
+        generated_code = research_agent.generate_mern_code(concepts, project_name)
+        
+        # Step 4: Create ZIP file
+        download_path = os.path.join(os.getcwd(), "downloads")
+        os.makedirs(download_path, exist_ok=True)
+        
+        zip_path = research_agent.create_zip_file(project_name, download_path)
+        
+        if zip_path.startswith("Error"):
+            return f"Error creating ZIP file: {zip_path}"
+        
+        # Step 5: Generate comprehensive response
+        response = f"""
+RESEARCH PAPER ANALYSIS COMPLETE!
+
+ABSTRACT:
+{content[:500]}...
+
+KEY INSIGHTS:
+- Keywords: {', '.join(concepts['keywords'][:10])}
+- Technical Terms: {', '.join(concepts['technical_terms'])}
+- Features: {', '.join(concepts['features'])}
+- Content Length: {concepts['content_length']} characters
+
+PROJECT STRUCTURE:
+"""
+        
+        for file_path in generated_code.keys():
+            response += f"- {file_path}\n"
+        
+        response += f"""
+
+CODE IMPLEMENTATIONS:
+
+=== BACKEND SERVER.JS ===
+"""
+        
+        # Add backend server code
+        if 'backend/server.js' in generated_code:
+            server_code = generated_code['backend/server.js']
+            response += server_code + "\n"
+        
+        response += """
+=== FRONTEND APP.JS ===
+"""
+        
+        # Add frontend app code
+        if 'frontend/src/App.js' in generated_code:
+            app_code = generated_code['frontend/src/App.js']
+            response += app_code + "\n"
+        
+        response += """
+=== BACKEND PACKAGE.JSON ===
+"""
+        
+        # Add package.json content
+        if 'backend/package.json' in generated_code:
+            import json
+            package_json = generated_code['backend/package.json']
+            response += json.dumps(package_json, indent=2) + "\n"
+        
+        response += """
+=== FRONTEND PACKAGE.JSON ===
+"""
+        
+        # Add frontend package.json
+        if 'frontend/package.json' in generated_code:
+            frontend_package = generated_code['frontend/package.json']
+            response += json.dumps(frontend_package, indent=2) + "\n"
+        
+        response += f"""
+
+DOWNLOAD INFORMATION:
+- ZIP File: {zip_path}
+- File Size: {os.path.getsize(zip_path)} bytes
+- Programming Language: {language}
+
+NEXT STEPS:
+1. Extract the ZIP file from: {zip_path}
+2. Install dependencies: npm install (in both backend and frontend folders)
+3. Set up MongoDB database
+4. Update .env file with your configuration
+5. Start backend: npm run dev (in backend folder)
+6. Start frontend: npm start (in frontend folder)
+
+Your complete MERN stack application is ready to use!
+"""
+        
+        return response
+        
+    except Exception as e:
+        return f"Error processing PDF: {str(e)}"
 
 def process_pdf_file(pdf_path):
     """
