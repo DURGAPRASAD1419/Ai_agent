@@ -1031,11 +1031,11 @@ def process_pdf_with_language(pdf_path, language):
         project_name = "research-app"
         generated_code = research_agent.generate_mern_code(concepts, project_name)
         
-        # Step 4: Create ZIP file
-        download_path = os.path.join(os.getcwd(), "downloads")
-        os.makedirs(download_path, exist_ok=True)
+        # Step 4: Create ZIP file in user's Downloads folder
+        downloads_folder = os.path.join(os.path.expanduser("~"), "Downloads")
+        os.makedirs(downloads_folder, exist_ok=True)
         
-        zip_path = research_agent.create_zip_file(project_name, download_path)
+        zip_path = research_agent.create_zip_file(project_name, downloads_folder)
         
         if zip_path.startswith("Error"):
             return f"Error creating ZIP file: {zip_path}"
@@ -1114,23 +1114,27 @@ CODE IMPLEMENTATIONS:
 
 DOWNLOAD INFORMATION:
 - ZIP File Path: {zip_path}
-- Local Directory: {os.path.dirname(zip_path)}
 - File Name: {os.path.basename(zip_path)}
 - File Size: {os.path.getsize(zip_path)} bytes
 - Programming Language: {language}
+- Download Location: Your Downloads folder
 
-DIRECT DOWNLOAD:
-You can find your complete MERN stack project at:
-{zip_path}
+DIRECT DOWNLOAD LINK:
+file://{zip_path.replace(os.sep, '/')}
+
+CLICK TO DOWNLOAD:
+The ZIP file has been automatically saved to your Downloads folder.
+You can access it at: {zip_path}
 
 NEXT STEPS:
-1. Navigate to: {os.path.dirname(zip_path)}
-2. Extract the ZIP file: {os.path.basename(zip_path)}
-3. Install dependencies: npm install (in both backend and frontend folders)
-4. Set up MongoDB database
-5. Update .env file with your configuration
-6. Start backend: npm run dev (in backend folder)
-7. Start frontend: npm start (in frontend folder)
+1. Open your Downloads folder
+2. Find the file: {os.path.basename(zip_path)}
+3. Extract the ZIP file
+4. Install dependencies: npm install (in both backend and frontend folders)
+5. Set up MongoDB database
+6. Update .env file with your configuration
+7. Start backend: npm run dev (in backend folder)
+8. Start frontend: npm start (in frontend folder)
 
 Your complete MERN stack application is ready to use!
 """
