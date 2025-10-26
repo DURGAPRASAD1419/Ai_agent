@@ -1,66 +1,114 @@
-# Research Paper Agent - MERN Stack Generator
+# Research Paper Agent - Web Application Generator
 
-A powerful agent that extracts content from research papers (PDF) and automatically generates complete MERN stack applications based on the analysis.
+A powerful web application that extracts content from research papers (PDF) and automatically generates complete web applications based on the analysis. Upload a PDF, choose your technology stack, and download a ready-to-use application!
 
-## 🚀 Features
+## 🌟 Features
 
+- **Modern Web Interface**: Beautiful, responsive React frontend with drag-and-drop PDF upload
 - **PDF Content Extraction**: Extract text content from research papers using PyPDF2 and pdfplumber
 - **Intelligent Analysis**: Analyze research paper content to identify key concepts, features, and requirements
-- **MERN Stack Generation**: Generate complete MERN (MongoDB, Express.js, React.js, Node.js) applications
-- **Code Display**: Display generated code content separately for review
+- **Multiple Technology Stacks**: Generate applications using MERN, MEAN, LAMP, Django, Spring Boot, Laravel, Flask, or Ruby on Rails
+- **Real-time Processing**: Upload PDF and get instant analysis with progress indicators
 - **ZIP Download**: Create downloadable ZIP files with complete project structure
-- **Local Directory Support**: Download ZIP files to specified local directories
+- **RESTful API**: Clean Flask backend API for easy integration
 
 ## 📋 Requirements
 
 - Python 3.7+
+- Node.js 16+
 - Google ADK
-- Node.js (for running generated applications)
-- MongoDB (for database)
+- Modern web browser
 
-## 🛠️ Installation
+## 🛠️ Quick Setup
+
+### Option 1: Automated Setup (Recommended)
+
+**Windows:**
+```bash
+setup.bat
+```
+
+**Linux/Mac:**
+```bash
+chmod +x setup.sh
+./setup.sh
+```
+
+### Option 2: Manual Setup
 
 1. **Install Python dependencies:**
    ```bash
    pip install -r requirements.txt
    ```
 
-2. **Install Node.js dependencies (after generating project):**
+2. **Create necessary directories:**
    ```bash
-   cd backend && npm install
-   cd ../frontend && npm install
+   mkdir uploads
    ```
 
 ## 🎯 Usage
 
-### Basic Usage
+### Starting the Application
 
-```python
-from agent import research_agent
+1. **Run the setup script:**
+   ```bash
+   # Windows
+   setup.bat
+   
+   # Linux/Mac
+   chmod +x setup.sh
+   ./setup.sh
+   ```
 
-# Extract content from PDF
-content = research_agent.extract_pdf_content("path/to/research_paper.pdf")
+2. **Start the application:**
+   ```bash
+   python app.py
+   ```
 
-# Analyze content and generate structure
-project_structure, concepts = research_agent.analyze_content_and_generate_structure(content)
+3. **Open your browser** and go to `http://localhost:8080`
 
-# Generate MERN stack code
-generated_code = research_agent.generate_mern_code(concepts, "my-research-app")
+### Using the Web Interface
 
-# Create downloadable ZIP file
-zip_path = research_agent.create_zip_file("my-research-app", "downloads/")
-print(f"Project ready at: {zip_path}")
-```
+1. **Upload a PDF** research paper using the drag-and-drop interface
+2. **Choose your technology stack** from the dropdown menu
+3. **Click "Generate Application"** and wait for processing
+4. **Download the ZIP file** containing your complete application
+5. **Extract the ZIP file** and follow the included README instructions
 
-### Running the Example
+### Running Generated Applications
+
+Each generated ZIP file includes:
+
+- **Complete web application** with all necessary files
+- **Comprehensive README.md** with detailed setup instructions
+- **Startup scripts** for easy launching:
+  - `start-windows.bat` (Windows)
+  - `start.sh` (Linux/Mac)
+- **Environment configuration** files
+- **All dependencies** properly configured
+
+#### Quick Start for Generated Apps:
+1. **Extract the ZIP file**
+2. **Run the startup script:**
+   - Windows: Double-click `start-windows.bat`
+   - Linux/Mac: Run `chmod +x start.sh && ./start.sh`
+3. **Open browser** to `http://localhost:3000`
+
+### API Usage
+
+You can also use the API directly:
 
 ```bash
-python example_usage.py
+# Upload a PDF and generate application
+curl -X POST -F "file=@research_paper.pdf" -F "technology=MERN Stack" http://localhost:8080/api/upload
+
+# Download the generated ZIP file
+curl -O http://localhost:8080/api/download/research-app.zip
 ```
 
 ## 📁 Generated Project Structure
 
-The agent generates a complete MERN stack project with the following structure:
+The agent generates complete web applications with the following structure (example for MERN Stack):
 
 ```
 research-app/
@@ -89,6 +137,8 @@ research-app/
 │           └── App.css
 └── README.md
 ```
+
+**Note:** The structure varies based on the selected technology stack (MERN, MEAN, LAMP, Django, Spring Boot, Laravel, Flask, or Ruby on Rails).
 
 ## 🔧 Generated Features
 

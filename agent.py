@@ -107,7 +107,9 @@ class ResearchPaperAgent:
             "main": "server.js",
             "scripts": {
                 "start": "node server.js",
-                "dev": "nodemon server.js"
+                "dev": "nodemon server.js",
+                "setup": "npm install && echo 'Backend setup complete!'",
+                "test": "echo 'No tests specified' && exit 0"
             },
             "dependencies": {
                 "express": "^4.18.2",
@@ -120,6 +122,9 @@ class ResearchPaperAgent:
             },
             "devDependencies": {
                 "nodemon": "^3.0.1"
+            },
+            "engines": {
+                "node": ">=16.0.0"
             }
         }
         
@@ -375,7 +380,8 @@ module.exports = router;
                 "start": "react-scripts start",
                 "build": "react-scripts build",
                 "test": "react-scripts test",
-                "eject": "react-scripts eject"
+                "eject": "react-scripts eject",
+                "setup": "npm install && echo 'Frontend setup complete!'"
             },
             "eslintConfig": {
                 "extends": ["react-app", "react-app/jest"]
@@ -383,6 +389,9 @@ module.exports = router;
             "browserslist": {
                 "production": [">0.2%", "not dead", "not op_mini all"],
                 "development": ["last 1 chrome version", "last 1 firefox version", "last 1 safari version"]
+            },
+            "engines": {
+                "node": ">=16.0.0"
             }
         }
         
@@ -669,46 +678,248 @@ JWT_SECRET=your-super-secret-jwt-key-here
 NODE_ENV=development
 '''
         
+        # Environment example file
+        generated_code['backend/.env.example'] = '''PORT=5000
+MONGODB_URI=mongodb://localhost:27017/research-app
+JWT_SECRET=your-super-secret-jwt-key-here
+NODE_ENV=development
+'''
+        
         # README file
-        generated_code['README.md'] = f'''# {project_name.title()} - Research Paper Analysis Application
+        generated_code['README.md'] = f'''# {project_name.title()} - Generated Web Application
 
-## Overview
-This MERN stack application was generated based on the analysis of a research paper. It provides functionality for uploading, analyzing, and managing research papers.
+## 🚀 Quick Start Guide
 
-## Features
+This application was automatically generated based on your research paper analysis. Follow these steps to get it running:
+
+### 📋 Prerequisites
+- **Node.js** (v16 or higher) - [Download here](https://nodejs.org/)
+- **MongoDB** - [Download here](https://www.mongodb.com/try/download/community)
+- **Git** (optional) - [Download here](https://git-scm.com/)
+
+### 🛠️ Installation & Setup
+
+#### Option 1: Quick Start (Recommended)
+**Windows:**
+```bash
+# Double-click start-windows.bat or run:
+start-windows.bat
+```
+
+**Linux/Mac:**
+```bash
+# Make executable and run:
+chmod +x start.sh
+./start.sh
+```
+
+#### Option 2: Manual Setup
+
+#### 1. Backend Setup
+```bash
+# Navigate to backend directory
+cd backend
+
+# Install dependencies
+npm install
+
+# Create environment file
+cp .env.example .env
+# Edit .env file with your MongoDB connection string
+
+# Start the backend server
+npm run dev
+```
+The backend will run on `http://localhost:5000`
+
+#### 2. Frontend Setup
+```bash
+# Navigate to frontend directory (in a new terminal)
+cd frontend
+
+# Install dependencies
+npm install
+
+# Start the frontend development server
+npm start
+```
+The frontend will run on `http://localhost:3000`
+
+#### 3. Database Setup
+1. Install MongoDB on your system
+2. Start MongoDB service
+3. Update the `.env` file in the backend directory with your MongoDB connection string:
+   ```
+   MONGODB_URI=mongodb://localhost:27017/{project_name}
+   JWT_SECRET=your-super-secret-jwt-key-here
+   ```
+
+### 🎯 Application Features
 {chr(10).join([f"- {feature}" for feature in concepts.get('features', [])])}
 
-## Tech Stack
-- **Frontend**: React.js
-- **Backend**: Node.js, Express.js
-- **Database**: MongoDB
-- **Authentication**: JWT
+### 🔧 Technology Stack
+- **Frontend**: React.js with modern UI components
+- **Backend**: Node.js with Express.js framework
+- **Database**: MongoDB for data storage
+- **Authentication**: JWT-based user authentication
+- **Styling**: Modern CSS with responsive design
 
-## Installation
-
-### Backend Setup
-1. Navigate to backend directory: `cd backend`
-2. Install dependencies: `npm install`
-3. Create a `.env` file with your configuration
-4. Start the server: `npm run dev`
-
-### Frontend Setup
-1. Navigate to frontend directory: `cd frontend`
-2. Install dependencies: `npm install`
-3. Start the development server: `npm start`
-
-## API Endpoints
+### 📡 API Endpoints
 - `GET /api/research` - Get all research papers
 - `POST /api/research` - Create new research paper
+- `GET /api/research/:id` - Get specific research paper
 - `POST /api/auth/register` - User registration
 - `POST /api/auth/login` - User login
 
-## Generated Features
-Based on the research paper analysis, the following features were identified and implemented:
-{chr(10).join([f"- {feature}" for feature in concepts.get('features', [])])}
+### 🗂️ Project Structure
+```
+{project_name}/
+├── backend/
+│   ├── models/          # Database models
+│   ├── routes/          # API routes
+│   ├── middleware/      # Custom middleware
+│   ├── server.js        # Main server file
+│   ├── package.json     # Backend dependencies
+│   ├── .env             # Environment variables
+│   └── .env.example     # Environment template
+├── frontend/
+│   ├── src/
+│   │   ├── components/  # React components
+│   │   ├── pages/       # Page components
+│   │   ├── styles/      # CSS files
+│   │   └── App.js       # Main React app
+│   └── package.json     # Frontend dependencies
+├── start-windows.bat    # Windows startup script
+├── start.sh            # Linux/Mac startup script
+└── README.md           # This file
+```
 
-## Key Concepts Extracted
+### 🔍 Key Concepts Extracted from Research Paper
 {chr(10).join([f"- {keyword}" for keyword in concepts.get('keywords', [])[:10]])}
+
+### 🚨 Troubleshooting
+
+#### Common Issues:
+1. **Port already in use**: Change the port in `server.js` or kill the process using the port
+2. **MongoDB connection failed**: Ensure MongoDB is running and connection string is correct
+3. **Dependencies not installed**: Run `npm install` in both backend and frontend directories
+4. **CORS errors**: Check that backend is running on the correct port
+
+#### Getting Help:
+- Check the console for error messages
+- Ensure all prerequisites are installed
+- Verify MongoDB is running
+- Check network connectivity
+
+### 📝 Development Notes
+- The application uses modern ES6+ JavaScript
+- All components are functional React components
+- Database models use Mongoose ODM
+- Authentication is handled with JWT tokens
+- The UI is fully responsive and mobile-friendly
+
+### 🎉 Success!
+Once both servers are running, open your browser and go to `http://localhost:3000` to see your application in action!
+
+---
+*This application was generated by the Research Paper Agent based on your uploaded research paper.*
+'''
+        
+        # Windows startup script
+        generated_code['start-windows.bat'] = f'''@echo off
+echo 🚀 Starting {project_name.title()} Application...
+echo.
+
+echo 📦 Setting up Backend...
+cd backend
+call npm run setup
+if errorlevel 1 (
+    echo ❌ Backend setup failed!
+    pause
+    exit /b 1
+)
+
+echo 📦 Setting up Frontend...
+cd ../frontend
+call npm run setup
+if errorlevel 1 (
+    echo ❌ Frontend setup failed!
+    pause
+    exit /b 1
+)
+
+echo.
+echo ✅ Setup complete!
+echo.
+echo 🎯 Starting Application...
+echo.
+echo 📡 Starting Backend Server (Terminal 1)...
+start "Backend Server" cmd /k "cd backend && npm run dev"
+
+echo ⏳ Waiting for backend to start...
+timeout /t 5 /nobreak >nul
+
+echo 🌐 Starting Frontend Server (Terminal 2)...
+start "Frontend Server" cmd /k "cd frontend && npm start"
+
+echo.
+echo 🎉 Application is starting!
+echo 📡 Backend: http://localhost:5000
+echo 🌐 Frontend: http://localhost:3000
+echo.
+echo Press any key to exit...
+pause >nul
+'''
+        
+        # Linux/Mac startup script
+        generated_code['start.sh'] = f'''#!/bin/bash
+
+echo "🚀 Starting {project_name.title()} Application..."
+echo
+
+echo "📦 Setting up Backend..."
+cd backend
+npm run setup
+if [ $? -ne 0 ]; then
+    echo "❌ Backend setup failed!"
+    exit 1
+fi
+
+echo "📦 Setting up Frontend..."
+cd ../frontend
+npm run setup
+if [ $? -ne 0 ]; then
+    echo "❌ Frontend setup failed!"
+    exit 1
+fi
+
+echo
+echo "✅ Setup complete!"
+echo
+echo "🎯 Starting Application..."
+echo
+echo "📡 Starting Backend Server..."
+gnome-terminal -- bash -c "cd backend && npm run dev; exec bash" 2>/dev/null || \
+xterm -e "cd backend && npm run dev" 2>/dev/null || \
+osascript -e 'tell app "Terminal" to do script "cd backend && npm run dev"' 2>/dev/null || \
+echo "Please manually run: cd backend && npm run dev"
+
+echo "⏳ Waiting for backend to start..."
+sleep 5
+
+echo "🌐 Starting Frontend Server..."
+gnome-terminal -- bash -c "cd frontend && npm start; exec bash" 2>/dev/null || \
+xterm -e "cd frontend && npm start" 2>/dev/null || \
+osascript -e 'tell app "Terminal" to do script "cd frontend && npm start"' 2>/dev/null || \
+echo "Please manually run: cd frontend && npm start"
+
+echo
+echo "🎉 Application is starting!"
+echo "📡 Backend: http://localhost:5000"
+echo "🌐 Frontend: http://localhost:3000"
+echo
+echo "Press Enter to exit..."
+read
 '''
         
         self.generated_code = generated_code
