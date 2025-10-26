@@ -692,6 +692,28 @@ NODE_ENV=development
 
 This application was automatically generated based on your research paper analysis. Follow these steps to get it running:
 
+### ⚠️ IMPORTANT: Read This First!
+**Before running the application, you MUST install all dependencies by running `npm install` in both the backend and frontend directories. The "Cannot find module 'jsonwebtoken'" error occurs because dependencies haven't been installed yet.**
+
+### 🚀 Quick Fix for "Cannot find module 'jsonwebtoken'" Error:
+```bash
+# Step 1: Extract the ZIP file
+# Step 2: Navigate to backend directory
+cd backend
+
+# Step 3: Install all dependencies
+npm install
+
+# Step 4: Navigate to frontend directory  
+cd ../frontend
+
+# Step 5: Install all dependencies
+npm install
+
+# Step 6: Go back to root and run the startup script
+cd ..
+```
+
 ### 📋 Prerequisites
 - **Node.js** (v16 or higher) - [Download here](https://nodejs.org/)
 - **MongoDB** - [Download here](https://www.mongodb.com/try/download/community)
@@ -800,10 +822,11 @@ The frontend will run on `http://localhost:3000`
 ### 🚨 Troubleshooting
 
 #### Common Issues:
-1. **Port already in use**: Change the port in `server.js` or kill the process using the port
-2. **MongoDB connection failed**: Ensure MongoDB is running and connection string is correct
-3. **Dependencies not installed**: Run `npm install` in both backend and frontend directories
-4. **CORS errors**: Check that backend is running on the correct port
+1. **Module 'jsonwebtoken' not found**: Make sure you run `npm install` in the backend directory first! This installs all required dependencies including jsonwebtoken, bcryptjs, mongoose, etc.
+2. **Port already in use**: Change the port in `server.js` or kill the process using the port
+3. **MongoDB connection failed**: Ensure MongoDB is running and connection string is correct
+4. **Dependencies not installed**: Run `npm install` in both backend and frontend directories
+5. **CORS errors**: Check that backend is running on the correct port
 
 #### Getting Help:
 - Check the console for error messages
